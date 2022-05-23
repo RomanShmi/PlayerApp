@@ -93,7 +93,7 @@ namespace ConsoleApp4
         /// </summary>
         public override void PrintInfo() 
         {
-            Console.WriteLine("PLAYER ============> "+this.Id + "  " + this.Name + " " + this.Email);
+            Console.WriteLine("PLAYER class ============> "+this.Id + "  " + this.Name + " " + this.Email);
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace ConsoleApp4
         /// </summary>
         /// <param name="printPlayer"></param>
         /// <param name="player"></param>
-        public void Print(PrintPlayerInfo printPlayer, Player player)
+        public void Print(PrintPlayerInfo printPlayer, Player p)
         {
-            printPlayer(player);
+            printPlayer(p);
         }
 
         public override string addtoJSON()

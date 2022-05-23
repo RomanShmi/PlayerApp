@@ -19,18 +19,21 @@ namespace ConsoleApp4
         /// <summary>
         /// Accepts a print method and a Player to be printed
         /// </summary>
-        /// <param name="printPlayer"></param>
+        /// <param name="printBot"></param>
         /// <param name="bot"></param>
         public void Print(PrintBotInfo printPlayer, Bot bot)
         {
             printPlayer(bot);
         }
 
+       
+
+
         public override void PrintInfo()
         {
-            Console.WriteLine("BOT  ===========> "+this.Id + "  " + this.Name);
+            Console.WriteLine("BOT class  ===========> "+this.Id + "  " + this.Name);
         }
-    public override string addtoJSON() 
+        public override string addtoJSON() 
         {
             return JsonConvert.SerializeObject(this);
 

@@ -13,6 +13,8 @@ namespace ConsoleApp4
     internal class Program
     {
        
+    //    public static void PrintPrint() { Console.WriteLine("this is delegate"); }
+
         static void Main(string[] args)
         {
           
@@ -80,7 +82,7 @@ namespace ConsoleApp4
 
             }            
             
-            
+         
             
             foreach (Player p in players)
             {
@@ -90,11 +92,6 @@ namespace ConsoleApp4
 
 
             }
-
-
-
-            
-
             
             bool addBot = false;
 
@@ -125,13 +122,13 @@ namespace ConsoleApp4
             Console.WriteLine(players.Count);
 
 
-            string path = @"../../../records.txt";
+            string path = @"../../../records.json";
            
           
 
            // StreamWriter sw = new StreamWriter(path);
             StreamWriter sw = File.CreateText(path);
-            sw.WriteLine("{");
+          sw.WriteLine("{");
 
             foreach (BaseUnit p in players)
             {
@@ -140,23 +137,26 @@ namespace ConsoleApp4
                 { var player = (Player)p;
                   
                     player.PrintInfo();
+                    player.PrintEmail();// extension
                     Console.WriteLine(player.addtoJSON());
-                   sw.WriteLine(player.addtoJSON());
+                   sw.WriteLine(player.addtoJSON()+",");
                 }
 
                 if (p.GetType() == typeof(Bot))
                 {
                     var bot = (Bot)p;
                     bot.PrintInfo();
-                    
+                    bot.PrintName();
+                    bot.PrintBotName();// extension
+
                     Console.WriteLine(bot.addtoJSON());
-                    sw.WriteLine(bot.addtoJSON());
+                    sw.WriteLine(bot.addtoJSON()+",");
 
                 }
 
 
             }
-           // sw.WriteLine(JsonConvert.SerializeObject(players));
+           sw.WriteLine(JsonConvert.SerializeObject(players));
             sw.WriteLine("}");
             sw.Close();
             Console.ReadLine();

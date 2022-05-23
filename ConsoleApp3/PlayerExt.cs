@@ -18,7 +18,11 @@ namespace ConsoleApp4
 			Console.WriteLine($"Ext - Bot name: {bt.Name}");
 		}
 
+		public static void PrintBotName(this Bot bt)
+		{
 
+			Console.WriteLine($"Ext - Bot name: {bt.Name}");
+		}
 
 
 
