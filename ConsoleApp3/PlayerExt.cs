@@ -11,6 +11,20 @@ namespace ConsoleApp4
 	/// </summary>
 	public static class PlayerExt
 	{
+
+		public static void PrintName(this Bot bt)
+		{
+
+			Console.WriteLine($"Ext - Bot name: {bt.Name}");
+		}
+
+
+
+
+
+
+
+
 		public static void PrintName(this Player pl)
 		{
 
@@ -26,7 +40,7 @@ namespace ConsoleApp4
 		}
 		public static void PrintNameAndId(this Player pl)
 		{
-			Console.WriteLine($"Ext - Player name: {pl.Name}      Player Email {pl.Email}      Player id: {pl.Id}"); ;
+            Console.WriteLine($"Ext - Player name: {pl.Name}      Player Email {pl.Email}      Player id: {pl.Id}"); ;
 		}
 	}
 }

@@ -5,17 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace ConsoleApp4
 {
-    public class Player : IPlayer
+    public class Player : BaseUnit, IPlayer
     {
-        private readonly Guid _id= Guid.NewGuid();
-        private string _name="";
-        private string _email = "";
-        public Guid Id { get { return _id;  } }
-        public string Name { get { return _name; } set { _name = value; } }
-        public string Email { get { return _email; } set {
+         private string _email = "";
+          public string Email { get { return _email; } set {
 
                 do
                 {
@@ -92,13 +89,12 @@ namespace ConsoleApp4
 
 
         /// <summary>
-        /// Print Payer info
+        /// Print Player info
         /// </summary>
-        public void PrintInfo() 
+        public override void PrintInfo() 
         {
-            Console.WriteLine(this.Id + "  " + this.Name + " " + this.Email);
+            Console.WriteLine("PLAYER ============> "+this.Id + "  " + this.Name + " " + this.Email);
         }
-
 
         /// <summary>
         /// Accepts a print method and a Player to be printed
@@ -110,6 +106,11 @@ namespace ConsoleApp4
             printPlayer(player);
         }
 
+        public override string addtoJSON()
+        {
+            return JsonConvert.SerializeObject(this);
+
+        }
 
 
 

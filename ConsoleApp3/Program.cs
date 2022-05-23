@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using System.Globalization;  //csv librararies
+using CsvHelper;               //csv librararies
+using CsvHelper.Configuration;   //csv librararies
+using System.IO;
+using Newtonsoft.Json;
+
 namespace ConsoleApp4
 {
     internal class Program
@@ -9,23 +15,51 @@ namespace ConsoleApp4
        
         static void Main(string[] args)
         {
-           Player p1= new();
-            p1.Name = "AAAAAAAAA";
-            p1.Email = "asdf@asd.dd";
-            Console.WriteLine(p1.Id+"  "+p1.Name+" "+p1.Email);
+          
+          
 
 
-            List < Player > players= new List<Player>();
+            List < BaseUnit > players= new List<BaseUnit>();
+
+
+            /// <summary>
+            /// Read players from csv file
+            /// </summary>
+            var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
+            {
+                HasHeaderRecord = false,
+                Comment = '#',
+                AllowComments = true,
+                Delimiter = "; ",
+            };
+
+            using var streamReader = File.OpenText("../../../data.csv");
+            using var csvReader = new CsvReader(streamReader, csvConfig);
+
+            while (csvReader.Read())
+            {
+                var firstName = csvReader.GetField(0);
+                var email = csvReader.GetField(1);
+
+                Player pf = new();
+                pf.Name = firstName;
+                pf.Email = email;
+                Console.WriteLine(pf.Id + "  " + pf.Name + " " + pf.Email);
+                players.Add(pf);
+
+
+            }
+
            
-            
-            players.Add(p1);
+
+
 
             bool addPlayer = false;
 
             
             while (!addPlayer)
             {
-                Console.WriteLine("if you wont to add player to list click y");
+                Console.WriteLine("if you wont to add PLAYER to list click y");
                 if (Console.ReadLine().ToLower() == "y")
                 {
                     Player p = new();
@@ -58,6 +92,74 @@ namespace ConsoleApp4
             }
 
 
+
+            
+
+            
+            bool addBot = false;
+
+
+            while (!addBot)
+            {
+                Console.WriteLine("\n\n ======================================");
+                Console.WriteLine("if you wont to add BOT to list click y");
+                if (Console.ReadLine().ToLower() == "y")
+                {
+                    Bot bot = new();
+                    Console.WriteLine("   enter name");
+                    bot.Name = Console.ReadLine();
+                   
+                    players.Add(bot);
+
+
+                }
+                else
+                {
+                    addBot = true;
+                    Console.WriteLine("no more bots to add \n \n");
+
+                }
+
+            }
+
+            Console.WriteLine(players.Count);
+
+
+            string path = @"../../../records.txt";
+           
+          
+
+           // StreamWriter sw = new StreamWriter(path);
+            StreamWriter sw = File.CreateText(path);
+            sw.WriteLine("{");
+
+            foreach (BaseUnit p in players)
+            {
+                    
+               if (p.GetType()== typeof(Player)) 
+                { var player = (Player)p;
+                  
+                    player.PrintInfo();
+                    Console.WriteLine(player.addtoJSON());
+                   sw.WriteLine(player.addtoJSON());
+                }
+
+                if (p.GetType() == typeof(Bot))
+                {
+                    var bot = (Bot)p;
+                    bot.PrintInfo();
+                    
+                    Console.WriteLine(bot.addtoJSON());
+                    sw.WriteLine(bot.addtoJSON());
+
+                }
+
+
+            }
+           // sw.WriteLine(JsonConvert.SerializeObject(players));
+            sw.WriteLine("}");
+            sw.Close();
+            Console.ReadLine();
 
         }
     }
